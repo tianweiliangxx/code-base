@@ -26,7 +26,7 @@ for (let i = 0; i < 10; i++) {
     debounceFetchData() // 这里执行的是执行的debounce返回的函数，他们共享一个timeout
 }
 
-// # 节流
+// # 节流，按照固定时间间隔执行，间隔外的事件会直接忽略
 function throttle(func, limit) {
     let inThrottle;
     return function(...args) {

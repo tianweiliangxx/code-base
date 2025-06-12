@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "axios": "^1.9.0",
+    "xmlhttprequest": "^1.8.0"
+  }
+}

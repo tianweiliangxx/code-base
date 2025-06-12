@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+    <script>
+        var xhr = new XMLHttpRequest();
+        xhr.addEventListener('progress', function (event) {
+            console.log(event)
+            if (event.lengthComputable) {
+
+                // 获取已传输的数据量和总数据量
+                var loaded = event.loaded;
+                var total = event.total;
+
+                var progress = Math.round((loaded / total) * 100)
+
+                console.log(progress)
+            }
+        })
+
+        xhr.open("GET", "https://jkapi.com/api/one_yan?type=json");
+        xhr.send();
+
+        xhr.onreadystatechange = function () {
+            if (xhr.status === 200) {
+                console.log(xhr.responseText);
+            }
+        };
+    </script>
+</body>
+
+</html>

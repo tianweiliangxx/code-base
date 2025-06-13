@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>水印功能</title>
+    <style>
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        .content {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            /* // 直接使用svg做水印 */
+            /* background-image: url('./assets/svg/咖啡.svg'); */
+            background-repeat: repeat;
+            opacity: 0.1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content"></div>
+    <h1>水印功能</h1>
+    <p>哈哈哈哈哈哈哈哈哈</p>
+
+    <img id="sourceImage" src="source-image.jpg" alt="">
+    <img id="watermarkedImage" alt="Watermarked Image">
+</body>
+
+<script>
+    function createWatermarkSVG(text) {
+        const svg = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+                <text x="50%" y="50%" dy=".35em" text-onchor="middle" fill="ragb(0, 0, 0, 0.1)" font-size="30" transform="rotate(-45, 100, 100)">
+                    ${text}    
+                </text>
+            </svg>
+        `
+        return `data:image/svg+xml;base64,${window.btoa(svg)}`
+    }
+
+    const watermarkText = "水印"
+    document.body.style.backgroundImage = `url('${createWatermarkSVG(watermarkText)}')`
+
+
+    function addWatermark(imageSrc, watermarkText) {
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const image = new Image();
+        image.src = imageSrc;
+        image.onload = function() {
+            canvas.width = image.width;
+            canvas.height = image.height;
+            ctx.drawImage(image, 0, 0);
+            ctx.font = '30px Arial';
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+            ctx.fillText(watermarkText, 50, 50);
+            document.getElementById('watermarkedImage').src = canvas.toDataURL('image/png');
+
+        }
+    }
+
+    const imageSrc = document.getElementById('sourceImage').src;
+
+    addWatermark(imageSrc, '水印')
+    addWatermark(imageSrc, '水印2')
+
+
+</script>
+
+</html>
